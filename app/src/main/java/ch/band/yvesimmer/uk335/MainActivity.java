@@ -1,11 +1,10 @@
-package ch.band.yvesimmer.myapplication;
+package ch.band.yvesimmer.uk335;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-    //bla
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

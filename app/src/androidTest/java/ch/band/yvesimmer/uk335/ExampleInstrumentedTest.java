@@ -1,4 +1,4 @@
-package ch.band.yvesimmer.myapplication;
+package ch.band.yvesimmer.uk335;
 
 import android.content.Context;
 
