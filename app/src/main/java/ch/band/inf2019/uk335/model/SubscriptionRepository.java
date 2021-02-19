@@ -32,7 +32,7 @@ public class SubscriptionRepository {
     }
 
     /**
-     * Inserts a Subscription in to the Database
+     * Inserts Subscriptions in to the Database
      * @param subscriptions Subscriptions to be inserted in to the Database
      */
     public void insert(Subscription... subscriptions){
@@ -40,30 +40,67 @@ public class SubscriptionRepository {
     }
 
     /**
-     * Inserts a Categorie in to the Database
+     * Inserts Categories in to the Database
      * @param categories Categories to to be inserted in to the Database
      */
     public void insert(Categorie... categories){
         executor.execute(() -> categorieDao.insert(categories));
     }
-    public void update(Subscription... subscription){
-        executor.execute(() -> subscriptionDao.updateSubscriptions(subscription));
+
+    /**
+     * Updates Subscriptions in the Database
+     * @param subscriptions Subscriptions to be updated in the Database
+     */
+    public void update(Subscription... subscriptions){
+        executor.execute(() -> subscriptionDao.updateSubscriptions(subscriptions));
     }
+    /**
+     * Updates Subscriptions in the Database
+     * @param categories Categories to be updated in the Database
+     */
     public void update(Categorie... categories){
         executor.execute(() -> categorieDao.updateCategories(categories));
     }
+    /**
+     * Deletes Subscriptions in the Database
+     * @param subscriptions Subscriptions to be deleted in the Database
+     */
     public void delete(Subscription... subscriptions){
         executor.execute(() -> subscriptionDao.deleteSubscriptions(subscriptions));
     }
+    /**
+     * Deletes Subscriptions in the Database
+     * @param categories Categories to be deleted in the Database
+     */
     public void delete(Categorie... categories){
         executor.execute(() -> categorieDao.deleteCategories(categories));
     }
 
+    /**
+     * Returns all the Categories in the Database
+     * @return All Categories
+     */
     public LiveData<List<Categorie>> getAllCategories() {
         return allCategories;
     }
 
+    /**
+     * Returns all Subscriptions in the Database
+     * @return All Subscriptions orderd by the day of the next Paymenent
+     */
     public LiveData<List<Subscription>> getAllSubscriptions() {
         return allSubscriptions;
     }
+    //TODO Implement Find Subscrition by Categorie with Callbacks in ViewModel
+    /*public LiveData<List<Subscription>> getSubscriptionsfromCategorieID(long categorieid){
+        final LiveData<List<Subscription>> results;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+               subscriptionDao.findSubscriptionsForCategorie(categorieid);
+
+            }
+        });
+
+    }*/
 }
