@@ -11,7 +11,7 @@ import android.os.Bundle;
 import java.util.List;
 
 import ch.band.inf2019.uk335.R;
-import ch.band.inf2019.uk335.model.Subscription;
+import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.view.SubscriptionAdapter;
 import ch.band.inf2019.uk335.viewModel.SubscriptionViewModel;
 

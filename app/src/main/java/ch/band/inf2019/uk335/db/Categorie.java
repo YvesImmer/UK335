@@ -1,10 +1,10 @@
-package ch.band.inf2019.uk335.model;
+package ch.band.inf2019.uk335.db;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
+
 import androidx.room.PrimaryKey;
 
-import static androidx.room.ForeignKey.CASCADE;
+
 
 @Entity(tableName = "categorie_table")
 public class Categorie {

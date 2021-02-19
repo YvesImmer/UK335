@@ -1,6 +1,4 @@
-package ch.band.inf2019.uk335.model;
-
-import android.hardware.camera2.CameraConstrainedHighSpeedCaptureSession;
+package ch.band.inf2019.uk335.db;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;

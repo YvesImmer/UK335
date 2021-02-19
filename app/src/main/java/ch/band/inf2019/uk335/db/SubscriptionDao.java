@@ -1,4 +1,4 @@
-package ch.band.inf2019.uk335.model;
+package ch.band.inf2019.uk335.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Delete;
@@ -8,16 +8,16 @@ import androidx.room.Update;
 
 import java.util.List;
 
-public interface SubsciptionDao {
+public interface SubscriptionDao {
 
     @Insert
-    void insert(Subscription subscription);
+    void insert(Subscription... subscription);
 
     @Update
-    void updateSubscriptions(Subscription... subscriptions);
+    void updateSubscriptions(Subscription... subscription);
 
     @Delete
-    void deleteSubscriptions(Subscription... subscriptions);
+    void deleteSubscriptions(Subscription... subscription);
 
     @Query("SELECT * FROM subscription_table")
     LiveData<List<Subscription>> getAllSubscriptions();

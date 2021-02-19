@@ -1,4 +1,4 @@
-package ch.band.inf2019.uk335.model;
+package ch.band.inf2019.uk335.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Delete;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface CategorieDao {
 
     @Insert
-    void insert(Categorie categorie);
+    void insert(Categorie... categories);
 
     @Update
     void updateCategories(Categorie... categories);
