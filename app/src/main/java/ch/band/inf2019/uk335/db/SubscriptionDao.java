@@ -19,9 +19,9 @@ public interface SubscriptionDao {
     @Delete
     void deleteSubscriptions(Subscription... subscription);
 
-    @Query("SELECT * FROM subscription_table")
+    @Query("SELECT * FROM subscription_table ORDER BY dayofnextPayment DESC")
     LiveData<List<Subscription>> getAllSubscriptions();
 
     @Query("SELECT * FROM subscription_table WHERE categorieid=:categorieid")
-    LiveData<List<Subscription>> findSubscriptionsForCategorie(final int categorieid);
+    LiveData<List<Subscription>> findSubscriptionsForCategorie(final long categorieid);
 }

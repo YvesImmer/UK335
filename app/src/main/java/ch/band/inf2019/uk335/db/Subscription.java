@@ -20,15 +20,15 @@ public class Subscription {
 
     public String title;
 
-    public long zahltag;
+    public long dayofnextPayment;
 
     public int preis;
 
     public long categorieid;
 
-    public Subscription(String title, long zahltag, int preis, long categorieid) {
+    public Subscription(String title, long dayofnextPayment, int preis, long categorieid) {
         this.title = title;
-        this.zahltag = zahltag;
+        this.dayofnextPayment = dayofnextPayment;
         this.preis = preis;
         this.categorieid = categorieid;
     }
