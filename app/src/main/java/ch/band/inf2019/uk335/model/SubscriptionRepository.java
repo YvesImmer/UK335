@@ -1,9 +1,11 @@
 package ch.band.inf2019.uk335.model;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Room;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -15,13 +17,14 @@ import ch.band.inf2019.uk335.db.SubscriptionDao;
 import ch.band.inf2019.uk335.db.SubscriptionDatabase;
 
 public class SubscriptionRepository {
+    private static SubscriptionRepository instance;
     private final Executor executor;
     private CategorieDao categorieDao;
     private SubscriptionDao subscriptionDao;
     private LiveData<List<Categorie>> allCategories;
     private LiveData<List<Subscription>> allSubscriptions;
 
-    public SubscriptionRepository(Application application, Executor executor){
+    private SubscriptionRepository(Application application, Executor executor){
         this.executor = executor;
         SubscriptionDatabase database = SubscriptionDatabase.getInstance(application);
         categorieDao = database.categorieDao();
@@ -29,6 +32,12 @@ public class SubscriptionRepository {
         allCategories = categorieDao.getAllCategories();
         allSubscriptions = subscriptionDao.getAllSubscriptions();
 
+    }
+    public static synchronized SubscriptionRepository getInstance(Application app){
+        if (instance == null){
+            instance = new SubscriptionRepository(app,new NewThreadExecutor());
+        }
+        return instance;
     }
 
     /**
