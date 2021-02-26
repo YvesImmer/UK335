@@ -10,6 +10,7 @@ public class Categorie {
 
     public String title;
 
+
     public Categorie(String title) {
         this.title = title;
     }

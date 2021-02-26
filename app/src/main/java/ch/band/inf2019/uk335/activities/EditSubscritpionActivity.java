@@ -2,6 +2,7 @@ package ch.band.inf2019.uk335.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
@@ -21,7 +22,7 @@ public class EditSubscritpionActivity extends AppCompatActivity {
     private TextInputEditText nameTextInput;
     private Spinner categorySpinner;
     private TextInputEditText priceTextInput;
-    private DatePi
+    private DatePicker d;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,12 +32,12 @@ public class EditSubscritpionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
         if(subscriptionID >=0){
-            //Fill boxes with existing values
+            //TODO: Fill boxes with existing values
 
 
         }
         else{
-            //Create new Subscritpion
+            //TODO: Create new Subscritpion
         }
     }
 }
