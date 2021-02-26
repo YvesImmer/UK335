@@ -74,7 +74,6 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
     }
 
     private void setupInputs() {
-
         tv_selectedDate = findViewById(R.id.text_view_picked_date);
         tv_selectedDate.setText(dueDate);
         //Category Spinner
