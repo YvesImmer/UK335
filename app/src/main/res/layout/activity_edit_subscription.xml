@@ -104,6 +104,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
             <Spinner
+                android:id="@+id/spinner_category_select"
                 android:layout_width="@dimen/detail_fillable_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

@@ -39,8 +39,6 @@ public class SubscriptionNotificationManager implements Observer<List<Subscripti
                 .setSmallIcon(R.drawable.ic_sheffy)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build();
-
-
     }
 
     @Override

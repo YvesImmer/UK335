@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
+import ch.band.inf2019.uk335.model.SubscriptionRepository;
 import ch.band.inf2019.uk335.viewmodel.CategoryAdapter;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 

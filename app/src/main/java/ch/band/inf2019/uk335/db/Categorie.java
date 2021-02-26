@@ -10,8 +10,14 @@ public class Categorie {
 
     public String title;
 
-
     public Categorie(String title) {
         this.title = title;
+    }
+
+
+    //overridden so it is displayed in the category select spinner
+    @Override
+    public String toString(){
+        return title;
     }
 }

@@ -37,6 +37,6 @@ public class Subscription {
         title = "";
         dayofnextPayment = 0;
         preis = 0;
-        categorieid = -1;
+        categorieid = 0;
     }
 }
