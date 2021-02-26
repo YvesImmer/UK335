@@ -95,8 +95,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 // set message, title, and icon
                 .setTitle("Löschen")
                 .setMessage("Wirklich löschen? Alle Abos dieser Kategorie werden auch gelöscht.")
-
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //your deleting code
@@ -106,7 +105,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                     }
 
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();

@@ -36,6 +36,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
     private MainViewModel viewModel;
     private TextInputEditText nameTextInput;
     private Spinner categorySpinner;
+    private Spinner frequencySpinner;
     private TextInputEditText priceTextInput;
 
 
@@ -65,58 +66,58 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
 
     private void setupInputs() {
 
-//        //Category Spinner
-//        categorySpinner = findViewById(R.id.spinner_category_select);
-//        ArrayAdapter<Categorie> categorySpinnerAdapter = new ArrayAdapter<Categorie>(this,
-//                android.R.layout.simple_spinner_item, viewModel.getCategories().getValue());
-//        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        categorySpinner.setAdapter(categorySpinnerAdapter);
-//
-//        Button btn_datepicker = findViewById(R.id.btn_datepicker);
-//        btn_datepicker.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DialogFragment datePicker = new DatePickerFragment();
-//                datePicker.show(getSupportFragmentManager(), "date picker");
-//            }
-//        });
-//
-//        nameTextInput = findViewById(R.id.text_input_name);
-//        nameTextInput.addTextChangedListener(
-//                new TextWatcher() {
-//                    @Override
-//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                    }
-//
-//                    @Override
-//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                    }
-//
-//                    @Override
-//                    public void afterTextChanged(Editable s) {
-//                        subscription.title = s.toString();
-//                    }
-//                }
-//        );
-//
-//        priceTextInput = findViewById(R.id.text_input_price);
-//        priceTextInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-//        priceTextInput.addTextChangedListener(
-//                new TextWatcher() {
-//                    @Override
-//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                    }
-//
-//                    @Override
-//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                    }
-//
-//                    @Override
-//                    public void afterTextChanged(Editable s) {
-//                        subscription.price = (int) Double.parseDouble(s.toString())*100;
-//                    }
-//                }
-//        );
+        //Category Spinner
+        categorySpinner = findViewById(R.id.spinner_category_select);
+        ArrayAdapter<Categorie> categorySpinnerAdapter = new ArrayAdapter<Categorie>(this,
+                android.R.layout.simple_spinner_item, viewModel.getCategories().getValue());
+        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categorySpinnerAdapter);
+
+        Button btn_datepicker = findViewById(R.id.btn_datepicker);
+        btn_datepicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+
+        nameTextInput = findViewById(R.id.text_input_name);
+        nameTextInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        subscription.title = s.toString();
+                    }
+                }
+        );
+
+        priceTextInput = findViewById(R.id.text_input_price);
+        priceTextInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        priceTextInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        subscription.price = (int) Double.parseDouble(s.toString())*100;
+                    }
+                }
+        );
     }
 
     @Override

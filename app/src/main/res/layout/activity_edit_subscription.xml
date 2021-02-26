@@ -144,20 +144,20 @@
             android:background="@color/cardview_dark_background">
 
             <TextView
+                android:id="@+id/text_view_frequency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="@string/label_frequency"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
-            <Spinner
-                android:id="@+id/spinner_frequency"
-                android:layout_width="@dimen/detail_fillable_width"
+            <ToggleButton
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown" />
+                android:textOn="Monatlich"
+                android:textOff="Jährlich"
+                                />
         </RelativeLayout>
 
         <RelativeLayout
