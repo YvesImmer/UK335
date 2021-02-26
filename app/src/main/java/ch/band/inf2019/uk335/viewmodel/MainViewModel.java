@@ -70,7 +70,16 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public Categorie getLastCategory(){
-        return  categories.getValue().get(Math.max(categories.getValue().size()-1,0));
+        int maxid = 0;
+        Categorie lastCategorie = null;
+        for (Categorie categorie:categories.getValue()
+        ) {
+            if(categorie.id> maxid){
+                maxid = categorie.id;
+                lastCategorie = categorie;
+            }
+        }
+        return  lastCategorie;
     }
 
 
@@ -98,7 +107,16 @@ public class MainViewModel extends AndroidViewModel {
         return null;
     }
     public Subscription getLastSubscription() {
-        return  subscriptions.getValue().get((Math.max(subscriptions.getValue().size()-1,0)));
+        int maxid = 0;
+        Subscription lastSubscription = null;
+        for (Subscription s:subscriptions.getValue()
+             ) {
+            if(s.subsciriptionid > maxid){
+                maxid = s.subsciriptionid;
+                lastSubscription = s;
+            }
+        }
+        return  lastSubscription;
     }
     //endregion
     //endregion
