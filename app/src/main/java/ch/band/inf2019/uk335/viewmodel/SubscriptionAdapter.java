@@ -12,7 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ch.band.inf2019.uk335.R;
@@ -43,11 +45,16 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         Subscription current_item = subscriptions.get(position);
 
         //TODO implement method to get category name for a Subscription
-        //holder.text_view_category.setText(current_item.getCategory());
-        //RELEASE
+        String frequency = "Einmalig";
+        if (current_item.frequency == 1){
+            frequency = "Monatlich";
+        }else if (current_item.frequency ==2){
+            frequency = "Jährlich";
+        }
+        holder.text_view_category.setText(frequency);
         holder.text_view_abo.setText(current_item.title);
-        holder.text_view_price.setText(String.valueOf(current_item.price));
-//        holder.text_view_duedate.setText(String.valueOf(current_item.dayofnextPayment));
+        holder.text_view_price.setText(String.valueOf((double)current_item.price/100));
+        holder.text_view_duedate.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(current_item.dayofnextPayment)));
         editOnclickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

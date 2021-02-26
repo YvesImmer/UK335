@@ -1,6 +1,7 @@
 package ch.band.inf2019.uk335.activities;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
@@ -43,6 +45,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
     private Spinner frequencySpinner;
     private TextInputEditText priceTextInput;
     private Button btn_save;
+    private Button btn_delete;
     TextView tv_selectedDate;
     String dueDate;
 
@@ -58,7 +61,6 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
                 categories = viewModel.getCategories().getValue();
             }
         });
-
         Intent intent = getIntent();
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
         if(subscriptionID >= 0){
@@ -70,14 +72,17 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
             viewModel.insert(new Subscription(viewModel.getFirstCategoryID()));
             subscription = viewModel.getLastSubscription();
             Calendar c = Calendar.getInstance();
-            dueDate = DateFormat.getDateInstance().format(c.getTime());
+            subscription.dayofnextPayment=c.getTime().getTime();
+            subscription.title = "Neues Abo";
+            subscription.frequency = 2;
+            subscription.price = 0;
         }
         setupInputs();
-
     }
 
     private void setupInputs() {
         tv_selectedDate = findViewById(R.id.text_view_picked_date);
+        dueDate = DateFormat.getDateInstance().format(subscription.dayofnextPayment);
         tv_selectedDate.setText(dueDate);
         //Category Spinner
         categorySpinner = findViewById(R.id.spinner_category_select);
@@ -104,7 +109,18 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
             }
         });
 
+        btn_delete = findViewById(R.id.btn_delete_subscription);
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog confirmBox = AskOption();
+                confirmBox.show();
+            }
+        });
+
+
         nameTextInput = findViewById(R.id.text_input_name);
+        nameTextInput.setText(subscription.title);
         nameTextInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -121,11 +137,9 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
                     }
                 }
         );
-
-
-
         priceTextInput = findViewById(R.id.text_input_price);
-        priceTextInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        priceTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+        priceTextInput.setText(String.valueOf(subscription.price/100));
         priceTextInput.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -138,7 +152,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        subscription.price = (int) Double.parseDouble(s.toString())*100;
+                        subscription.price = (int)(Double.parseDouble(s.toString())*100);
                     }
                 }
         );
@@ -159,5 +173,34 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         subscription.dayofnextPayment = c.getTimeInMillis();
         TextView tv_selectedDate = findViewById(R.id.text_view_picked_date);
         tv_selectedDate.setText(currentDateString);
+    }
+
+
+    private AlertDialog AskOption()
+    {
+        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
+                // set message, title, and icon
+                .setTitle("Löschen")
+                .setMessage("Wirklich löschen?")
+                .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //your deleting code
+                        viewModel.delete(subscription);
+                        gotoSubscriptions();
+                        dialog.dismiss();
+                    }
+
+                })
+                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+
+        return myQuittingDialogBox;
     }
 }

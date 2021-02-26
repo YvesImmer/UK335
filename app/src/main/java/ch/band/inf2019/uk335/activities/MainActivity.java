@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.updateAllDayOfNextPayment();
         initRecyclerView();
         initButtons();
-
     }
-
-    //TODO set and update price in bottom
 
     private void initRecyclerView(){
         Log.d(TAG, "initRecylerView: called");
