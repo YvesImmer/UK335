@@ -35,7 +35,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subscription_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -47,11 +47,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         //TODO implement a method to get the monthly cost of a category
         //holder.text_view_price.setText(current_item.monthlyPrice);
-        //holder.text_view_name.setText(current_item.title);
-
-        //DEBUG
-        //holder.text_view_name.setText("Title");
-        //holder.text_view_price.setText("Monthly Price");
+        holder.text_view_name.setText(current_item.title);
 
     }
 
