@@ -42,6 +42,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
     private Spinner categorySpinner;
     private Spinner frequencySpinner;
     private TextInputEditText priceTextInput;
+    private Button btn_save;
     TextView tv_selectedDate;
     String dueDate;
 
@@ -62,10 +63,10 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
         if(subscriptionID >= 0){
             subscription = viewModel.getSubscriptionById(subscriptionID);
-            setTitle("Kategorie berabeiten");
+            setTitle("Abo berabeiten");
         }
         else{
-            setTitle("Kategorie erstellen");
+            setTitle("Abo erstellen");
             viewModel.insert(new Subscription(viewModel.getFirstCategoryID()));
             subscription = viewModel.getLastSubscription();
             Calendar c = Calendar.getInstance();
@@ -81,7 +82,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         //Category Spinner
         categorySpinner = findViewById(R.id.spinner_category_select);
         ArrayAdapter<Categorie> categorySpinnerAdapter = new ArrayAdapter<Categorie>(this,
-                android.R.layout.simple_spinner_item, categories);
+                android.R.layout.simple_spinner_item, viewModel.getCategories().getValue());
         categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categorySpinnerAdapter);
 
@@ -91,6 +92,15 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
             public void onClick(View v) {
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+
+        btn_save = findViewById(R.id.btn_save_subscription);
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.update(subscription);
+                gotoSubscriptions();
             }
         });
 
@@ -112,6 +122,8 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
                 }
         );
 
+
+
         priceTextInput = findViewById(R.id.text_input_price);
         priceTextInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         priceTextInput.addTextChangedListener(
@@ -130,6 +142,11 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
                     }
                 }
         );
+    }
+
+    private void gotoSubscriptions() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override

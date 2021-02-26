@@ -57,13 +57,12 @@ public class EditCategoryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int categoryID = intent.getIntExtra(CategoryAdapter.EXTRA_CATEGORIE_ID ,-1);
         if(categoryID >= 0){
-            setTitle("Abo bearbeiten");
+            setTitle("Kategorie Bearbeiten");
             categorie = viewModel.getCategorieById(categoryID);
         }else {
-            setTitle("Abo erstellen");
+            setTitle("Kategorie erstellen");
             categorie = new Categorie("Test");
             viewModel.insert(categorie);
-
             categorie = viewModel.getLastCategory();
         }
         text_input_name.setText(categorie.title);
