@@ -36,11 +36,14 @@ import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 public class EditSubscritpionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private Subscription subscription;
+    private ArrayList<Categorie> categories;
     private MainViewModel viewModel;
     private TextInputEditText nameTextInput;
     private Spinner categorySpinner;
     private Spinner frequencySpinner;
     private TextInputEditText priceTextInput;
+    TextView tv_selectedDate;
+    String dueDate;
 
 
     @Override
@@ -48,7 +51,12 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         setContentView(R.layout.activity_edit_subscription);
-
+        viewModel.getCategories().observe(this, new Observer<List<Categorie>>() {
+            @Override
+            public void onChanged(List<Categorie> categories) {
+                categories = viewModel.getCategories().getValue();
+            }
+        });
 
         Intent intent = getIntent();
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
@@ -58,24 +66,21 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         else{
             viewModel.insert(new Subscription(viewModel.getFirstCategoryID()));
             subscription = viewModel.getLastSubscription();
-
             Calendar c = Calendar.getInstance();
-            String currentDateString = DateFormat.getDateInstance().format(c.getTime());
-            TextView tv_selectedDate = findViewById(R.id.text_view_picked_date);
-            tv_selectedDate.setText(currentDateString);
+            dueDate = DateFormat.getDateInstance().format(c.getTime());
         }
-        viewModel.getSubscriptions().observe( this,s ->{
-            setupInputs();
-        });
+        setupInputs();
 
     }
 
     private void setupInputs() {
 
+        tv_selectedDate = findViewById(R.id.text_view_picked_date);
+        tv_selectedDate.setText(dueDate);
         //Category Spinner
         categorySpinner = findViewById(R.id.spinner_category_select);
         ArrayAdapter<Categorie> categorySpinnerAdapter = new ArrayAdapter<Categorie>(this,
-                android.R.layout.simple_spinner_item, viewModel.getCategories().getValue());
+                android.R.layout.simple_spinner_item, categories);
         categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categorySpinnerAdapter);
 
