@@ -5,11 +5,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import ch.band.inf2019.uk335.db.Categorie;
@@ -19,26 +18,30 @@ import ch.band.inf2019.uk335.notifs.SubscriptionNotificationManager;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private LiveData<List<Subscription>> subscriptions;
-    private LiveData<List<Categorie>> categories;
+    private LiveData<List<Subscription>> livesubscriptions;
+    private List<Subscription> subscriptions;
+    private LiveData<List<Categorie>> livecategories;
+    private List<Categorie> categories;
     private SubscriptionNotificationManager notificationManager;
     SubscriptionRepository repository;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         repository = SubscriptionRepository.getInstance(application);
-        subscriptions = repository.getAllSubscriptions();
-        categories = repository.getAllCategories();
+        livesubscriptions = repository.getAllSubscriptions();
+        livecategories = repository.getAllCategories();
+        livecategories.observeForever(new CategoriesObserver());
+        livesubscriptions.observeForever(new SubscriptionObserver());
         notificationManager = new SubscriptionNotificationManager(application);
-        subscriptions.observeForever(notificationManager);
+        livesubscriptions.observeForever(notificationManager);
     }
     //region Database
     //region General CRUD
     public LiveData<List<Subscription>> getSubscriptions(){
-        return subscriptions;
+        return livesubscriptions;
     }
     public LiveData<List<Categorie>> getCategories() {
-        return categories;
+        return livecategories;
     }
 
     public void insert(Subscription subscription){
@@ -66,13 +69,15 @@ public class MainViewModel extends AndroidViewModel {
     //endregion
     //region Get Special Categories
     public int getFirstCategoryID(){
-        return categories.getValue().get(0).id;
+
+            return categories.get(0).id;
+
     }
 
     public Categorie getLastCategory(){
         int maxid = 0;
         Categorie lastCategorie = null;
-        for (Categorie categorie:categories.getValue()
+        for (Categorie categorie: categories
         ) {
             if(categorie.id> maxid){
                 maxid = categorie.id;
@@ -86,7 +91,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public Categorie getCategorieById(int ID){
         for (Categorie c:
-                categories.getValue()
+                categories
              ) {
             if(c.id == ID) return c;
         }
@@ -98,7 +103,7 @@ public class MainViewModel extends AndroidViewModel {
     public Subscription getSubscriptionById(int ID) {
 
         for (Subscription s:
-                Objects.requireNonNull(subscriptions.getValue())
+                Objects.requireNonNull(subscriptions)
         ) {
             if (s.subsciriptionid == ID) return s;
 
@@ -109,7 +114,7 @@ public class MainViewModel extends AndroidViewModel {
     public Subscription getLastSubscription() {
         int maxid = 0;
         Subscription lastSubscription = null;
-        for (Subscription s:subscriptions.getValue()
+        for (Subscription s: subscriptions
              ) {
             if(s.subsciriptionid > maxid){
                 maxid = s.subsciriptionid;
@@ -120,14 +125,33 @@ public class MainViewModel extends AndroidViewModel {
     }
     //endregion
     //endregion
-    //region Subscriptions
+    //region Subscription Calculations
     public void updateAllDayOfNextPayment(){
-        if(subscriptions.getValue() != null) {
-            for (Subscription s : subscriptions.getValue()
+        if(livesubscriptions.getValue() != null) {
+            for (Subscription s : livesubscriptions.getValue()
             ) {
                 update(s.updateDayOfNextPayment(new Date().getTime()));
             }
         }
     }
+    //endregion
+    //regions Observers
+    private class SubscriptionObserver implements Observer<List<Subscription>>{
+
+
+        @Override
+        public void onChanged(List<Subscription> data) {
+            subscriptions = data;
+        }
+    }
+    private class CategoriesObserver implements Observer<List<Categorie>>{
+
+
+        @Override
+        public void onChanged(List<Categorie> data) {
+            categories = data;
+        }
+    }
+
     //endregion
 }
