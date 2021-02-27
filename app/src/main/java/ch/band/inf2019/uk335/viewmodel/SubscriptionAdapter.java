@@ -61,7 +61,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         String title = getCategoryTitle(current_item.categorieid);
         holder.text_view_category.setText(title);
         holder.text_view_abo.setText(current_item.title);
-        holder.text_view_price.setText(String.valueOf((double)current_item.price/100));
+        holder.text_view_price.setText(String.valueOf(current_item.price/100.0));
         holder.text_view_duedate.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(current_item.dayofnextPayment)));
         editOnclickListener = new View.OnClickListener() {
             @Override
