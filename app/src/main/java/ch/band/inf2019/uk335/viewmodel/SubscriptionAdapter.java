@@ -1,5 +1,6 @@
 package ch.band.inf2019.uk335.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.lang.UScript;
@@ -50,7 +51,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         Log.d(TAG, "onBindViewHolder: called");
 
         Subscription current_item = subscriptions.get(position);
-        categorie = getCategory(current_item.categorieid);
+        Categorie categorie = getCategory(current_item.categorieid);
         //TODO implement method to get category name for a Subscription
         String frequency = "Einmalig";
         if (current_item.frequency == 1){
