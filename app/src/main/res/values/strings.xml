@@ -16,9 +16,11 @@
     <string name="text_view_new_subscription">Neues Abo</string>
     <string name="text_view_new_category">Neue Kategorie</string>
     <string name="notification_channel_desc">Kanal für die Abonnementbenachrichtigungen</string>
-    <string name="label_frequency">Häufigkeit:</string>
+    <string name="label_frequency">Wiederholen:</string>
     <string name="delete_cancel">Abbrechen</string>
     <string name="default_category_name">Neue Kategorie</string>
     <string name="default_subscription_name">Neues Abo</string>
     <string name="text_view_color">Farbe:</string>
+    <string name="yearly">Jährlich</string>
+    <string name="monthly">Monatlich</string>
 </resources>

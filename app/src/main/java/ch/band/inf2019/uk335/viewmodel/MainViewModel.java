@@ -17,7 +17,6 @@ import java.util.TimeZone;
 
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
-import ch.band.inf2019.uk335.model.OnDBOperationCompleteListener;
 import ch.band.inf2019.uk335.model.SubscriptionRepository;
 import ch.band.inf2019.uk335.notifs.SubscriptionNotificationManager;
 
@@ -29,6 +28,7 @@ public class MainViewModel extends AndroidViewModel{
     private List<Categorie> categories;
     private SubscriptionNotificationManager notificationManager;
     SubscriptionRepository repository;
+    private boolean isYearlyMode = false;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -143,6 +143,7 @@ public class MainViewModel extends AndroidViewModel{
             }
         }
     }
+
     public int getCostYear(){
         int cost = 0;
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -186,6 +187,14 @@ public class MainViewModel extends AndroidViewModel{
         }
         return cost;
     }
+
+    public  void changeMode(){
+        isYearlyMode = !isYearlyMode;
+    }
+    public boolean isYearlyMode() {
+        return isYearlyMode;
+    }
+
 
     //endregion
     //regions Observers

@@ -73,7 +73,7 @@
         app:layout_anchorGravity="bottom|center"
         android:background="@color/black">
         <RelativeLayout
-            android:id="@+id/relative_layout_price_duedate"
+            android:id="@+id/relative_layout_frequency_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -81,17 +81,17 @@
             android:focusable="true"
             android:layout_margin="8dp">
             <TextView
-                android:id="@+id/text_view_per_year"
+                android:id="@+id/text_view_frequency_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pro Jahr:"
-                android:layout_above="@id/text_view_yearly"
+                android:layout_above="@id/text_view_price_frequency"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:maxLines="1"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 />
             <TextView
-                android:id="@+id/text_view_yearly"
+                android:id="@+id/text_view_price_frequency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

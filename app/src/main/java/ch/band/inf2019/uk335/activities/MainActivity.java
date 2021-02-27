@@ -1,18 +1,18 @@
 package ch.band.inf2019.uk335.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Subscription>  subscriptions;
     private MainViewModel mainViewModel;
     private RecyclerView recyclerView;
-    SubscriptionAdapter adapter;
+    private SubscriptionAdapter adapter;
     private Button btn_goto_categories;
 
     @Override
@@ -63,9 +63,30 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.updateAllDayOfNextPayment();
         initRecyclerView();
         initButtons();
+        initSum();
     }
 
-    private void initRecyclerView(){
+    private void initSum() {
+        RelativeLayout container = findViewById(R.id.relative_layout_frequency_container);
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainViewModel.changeMode();
+            }
+        });
+        TextView textViewFrequency = findViewById(R.id.text_view_frequency_label);
+        TextView textViewSum = findViewById(R.id.text_view_price_frequency);
+        if (mainViewModel.isYearlyMode()) {
+            textViewFrequency.setText(getString(R.string.yearly));
+            textViewSum.setText(String.valueOf(mainViewModel.getCostYear()));
+        } else {
+            textViewFrequency.setText(getString(R.string.monthly));
+            textViewSum.setText(String.valueOf(mainViewModel.getCostMonth()));
+        }
+    }
+
+
+        private void initRecyclerView(){
         Log.d(TAG, "initRecylerView: called");
         recyclerView = findViewById(R.id.recycler_view_subscriptions);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
