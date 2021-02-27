@@ -11,8 +11,11 @@ public class Categorie {
 
     public String title;
 
-    public Categorie(String title) {
+    public int color;
+
+    public Categorie(String title,int color) {
         this.title = title;
+        this.color = color;
     }
 
 

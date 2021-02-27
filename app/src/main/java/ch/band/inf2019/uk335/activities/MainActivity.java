@@ -2,6 +2,8 @@ package ch.band.inf2019.uk335.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started");
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         setTitle("Abos");
 
         Observer observer = new Observer<List<Subscription>>() {

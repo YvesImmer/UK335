@@ -1,6 +1,7 @@
 package ch.band.inf2019.uk335.viewmodel;
 
 import android.app.Application;
+import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -100,7 +101,7 @@ public class MainViewModel extends AndroidViewModel{
             if(c.id == ID) return c;
         }
         //TODO implement propper exception
-        return new Categorie("Error");
+        return new Categorie("Error", Color.RED);
     }
     //endregion
     //region Get Special Subscriptions
@@ -128,17 +129,9 @@ public class MainViewModel extends AndroidViewModel{
         return  lastSubscription;
     }
 
-    public Categorie getCategorieFromSubscriptionID(int subscriptionId){
-        final Categorie[] categorie = new Categorie[1];
-        repository.getCategorieFromSubscriptionID(subscriptionId, new OnDBOperationCompleteListener() {
-            @Override
-            public void onDBOperationComplete(Object object) {
-                categorie[0] = (Categorie)object;
-            }
-        });
-        return categorie[0];
 
-    }
+
+
     //endregion
     //endregion
     //region Calculations

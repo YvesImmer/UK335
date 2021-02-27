@@ -104,22 +104,6 @@ public class SubscriptionRepository {
     }
 //endregion
 
-    public void getCategorieFromSubscriptionID(int subscriptionid,OnDBOperationCompleteListener listener) {
-        Executors.newSingleThreadExecutor()
-                .execute(() -> listener.onDBOperationComplete(subscriptionDao.getCategorieFromSubscription(subscriptionid))
-                );
 
-    }
-    /*public LiveData<List<Subscription>> getSubscriptionsfromCategorieID(long categorieid){
-        final LiveData<List<Subscription>> results;
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-               subscriptionDao.findSubscriptionsForCategorie(categorieid);
-
-            }
-        });
-
-    }*/
 
 }
