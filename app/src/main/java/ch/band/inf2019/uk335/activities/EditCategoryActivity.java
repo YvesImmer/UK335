@@ -53,6 +53,7 @@ public class EditCategoryActivity extends AppCompatActivity {
     private void initColorPicker() {
         Log.d(TAG, "initColorPicker");
         btn_color_picker = findViewById(R.id.btn_color_picker);
+        btn_color_picker.setBackgroundColor(categorie.color);
         btn_color_picker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
