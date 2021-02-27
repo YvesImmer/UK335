@@ -21,12 +21,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,6 +51,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     private Button btn_delete;
     TextView tv_selectedDate;
     String dueDate;
+    private boolean isNew;
 
 
     @Override
@@ -65,21 +66,21 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
             }
         });
         Intent intent = getIntent();
-        int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
-        if(subscriptionID >= 0){
+        int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID, -1);
+        if (subscriptionID >= 0) {
+            isNew = false;
             subscription = viewModel.getSubscriptionById(subscriptionID);
             setTitle("Abo berabeiten");
-        }
-        else{
+        } else {
+            isNew = true;
             setTitle("Abo erstellen");
-            viewModel.insert(new Subscription(viewModel.getFirstCategoryID()));
-            subscription = viewModel.getLastSubscription();
+            String title = getString(R.string.default_subscription_name);
+            int categoryId = viewModel.getFirstCategoryID();
             Calendar c = Calendar.getInstance();
-            subscription.dayofnextPayment=c.getTime().getTime();
-            subscription.title = "Neues Abo";
-            subscription.frequency = 1;
-            subscription.price = 0;
-            subscription.dayofnextPayment = c.getTime().getTime();
+            long dayofnextPayment = c.getTime().getTime();
+            int frequency = 1;
+            int price = 0;
+            subscription = new Subscription(title,dayofnextPayment,price,categoryId,frequency);
         }
         setupInputs();
     }
@@ -96,20 +97,34 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     private void initPriceInput() {
         priceTextInput = findViewById(R.id.text_input_price);
         priceTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-        priceTextInput.setText(String.valueOf(subscription.price/100));
+        priceTextInput.setText(String.valueOf(subscription.price / 100));
         priceTextInput.addTextChangedListener(
                 new TextWatcher() {
+                    private String current ="";
+//                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("DE","CH"));
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     }
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if(!s.toString().equals(current)){
+                            priceTextInput.removeTextChangedListener(this);
+                            String cleanString = s.toString().replaceAll("[$,.]","");
+                            double parsed = Double.parseDouble(cleanString);
+                            String formatted = NumberFormat.getCurrencyInstance().format(((parsed/100)));
+                            current = formatted;
+                            priceTextInput.setText(current);
+                            priceTextInput.setSelection((formatted.length()));
+
+                            priceTextInput.addTextChangedListener(this);
+                            subscription.price =(int)Math.round(parsed*100);
+                        }
                     }
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        subscription.price = (int)(Double.parseDouble(s.toString())*100);
+
                     }
                 }
         );
@@ -152,7 +167,9 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.update(subscription);
+                if(isNew){
+                    viewModel.insert(subscription);
+                }else {viewModel.update(subscription);}
                 gotoSubscriptions();
             }
         });
@@ -189,7 +206,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR,year);
+        c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String currentDateString = DateFormat.getDateInstance().format(c.getTime());
@@ -199,8 +216,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     }
 
 
-    private AlertDialog AskOption()
-    {
+    private AlertDialog AskOption() {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
                 // set message, title, and icon
                 .setTitle("Löschen")
@@ -229,7 +245,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Categorie selected = (Categorie)categorySpinner.getSelectedItem();
+        Categorie selected = (Categorie) categorySpinner.getSelectedItem();
         Log.d(TAG, "onItemSelected called selected category: " + selected.title);
         subscription.categorieid = selected.id;
     }
