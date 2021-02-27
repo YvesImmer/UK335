@@ -1,7 +1,7 @@
 package ch.band.inf2019.uk335.viewmodel;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.activities.EditCategoryActivity;
-import ch.band.inf2019.uk335.activities.EditSubscritpionActivity;
 import ch.band.inf2019.uk335.db.Categorie;
-import ch.band.inf2019.uk335.db.Subscription;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
 
@@ -51,11 +48,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 openEditActivity(v,current_item.id);
             }
         });
-
-
         //TODO implement a method to get the monthly cost of a category
         //holder.text_view_price.setText(current_item.monthlyPrice);
         holder.text_view_name.setText(current_item.title);
+        holder.parent_layout.setBackgroundColor(Color.CYAN);
 
     }
 

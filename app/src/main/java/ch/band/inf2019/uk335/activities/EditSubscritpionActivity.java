@@ -97,7 +97,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     private void initPriceInput() {
         priceTextInput = findViewById(R.id.text_input_price);
         priceTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-        priceTextInput.setText(String.valueOf(subscription.price / 100));
+        priceTextInput.setText(NumberFormat.getCurrencyInstance().format(subscription.price / 100));
         priceTextInput.addTextChangedListener(
                 new TextWatcher() {
                     private String current ="";
@@ -115,10 +115,9 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
                             String formatted = NumberFormat.getCurrencyInstance().format(((parsed/100)));
                             current = formatted;
                             priceTextInput.setText(current);
-                            priceTextInput.setSelection((formatted.length()));
-
+                            priceTextInput.setSelection(formatted.length());
                             priceTextInput.addTextChangedListener(this);
-                            subscription.price =(int)Math.round(parsed*100);
+                            subscription.price =(int)Math.round(parsed);
                         }
                     }
 
