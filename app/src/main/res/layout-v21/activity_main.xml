@@ -85,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pro Jahr:"
+                    android:layout_alignEnd="@+id/text_view_price_frequency"
                     android:layout_above="@id/text_view_price_frequency"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:maxLines="1"

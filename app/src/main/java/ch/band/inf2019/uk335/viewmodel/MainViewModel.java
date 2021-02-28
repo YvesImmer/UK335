@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -180,6 +179,7 @@ public class MainViewModel extends AndroidViewModel{
 
     public  void changeMode(){
         isYearlyMode = !isYearlyMode;
+        calulateCostMonthYear();
     }
     public boolean isYearlyMode() {
         return isYearlyMode;
