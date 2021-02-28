@@ -21,7 +21,7 @@ public interface SubscriptionDao {
     @Delete
     void deleteSubscriptions(Subscription... subscription);
 
-    @Query("SELECT * FROM subscription_table ORDER BY dayofnextPayment DESC")
+    @Query("SELECT * FROM subscription_table ORDER BY dayofnextPayment ASC")
     LiveData<List<Subscription>> getAllSubscriptions();
 
 

@@ -2,7 +2,6 @@ package ch.band.inf2019.uk335.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
@@ -50,20 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         mainViewModel.getSubscriptions().observe( this, subscriptions -> {
-            // RELEASE
             adapter.setSubscriptions((ArrayList<Subscription>) subscriptions);
             adapter.notifyDataSetChanged();
         });
         mainViewModel.getSubscriptions().observe(this, subscriptions -> {
-            setYearMontCost();
+            setYearMonthCost();
                 }
         );
-        mainViewModel.getCategories().observe(this, new Observer<List<Categorie>>() {
-            @Override
-            public void onChanged(List<Categorie> categories) {
-                adapter.setCategories((ArrayList<Categorie>) categories);
-                adapter.notifyDataSetChanged();
-            }
+        mainViewModel.getCategories().observe(this, categories -> {
+            adapter.setCategories((ArrayList<Categorie>) categories);
+            adapter.notifyDataSetChanged();
         });
         mainViewModel.updateAllDayOfNextPayment();
         initRecyclerView();
@@ -79,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 mainViewModel.changeMode();
             }
         });
-        setYearMontCost();
+        setYearMonthCost();
 
     }
-    private void setYearMontCost(){
+    private void setYearMonthCost(){
         TextView textViewFrequency = findViewById(R.id.text_view_frequency_label);
         TextView textViewSum = findViewById(R.id.text_view_price_frequency);
         if (mainViewModel.isYearlyMode()) {
@@ -90,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             textViewFrequency.setText(getString(R.string.monthly));
         }
-        textViewSum.setText(String.valueOf(mainViewModel.getCostMonthYear()));
+        textViewSum.setText(String.valueOf(mainViewModel.getCostMonthYear()/100.0));
     }
 
 

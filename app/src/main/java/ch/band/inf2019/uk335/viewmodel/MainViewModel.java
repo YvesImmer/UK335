@@ -144,10 +144,21 @@ public class MainViewModel extends AndroidViewModel{
         }
     }
 
-    public int getCostYear(){
-        int cost = 0;
-        if(subscriptions!=null) {
-            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+
+    public int calulateCostMonthYear(){
+        cost = 0;
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        if(!isYearlyMode) {
+            calendar.add(Calendar.MONTH, 1);
+            long monthInFutur = calendar.getTimeInMillis();
+            for (Subscription s : subscriptions
+
+            ) {
+                if (s.dayofnextPayment < monthInFutur) {
+                    cost += s.price;
+                }
+            }
+        }else {
             calendar.add(Calendar.YEAR, 1);
             long yearInFutur = calendar.getTimeInMillis();
             for (Subscription s : Objects.requireNonNull(subscriptions)
@@ -157,37 +168,11 @@ public class MainViewModel extends AndroidViewModel{
                     if (s.frequency == 2) {
                         cost += s.price;
                     } else if (s.frequency == 1) {
-                        Subscription scopy = new Subscription(
-                                s.title,
-                                s.dayofnextPayment,
-                                s.price,
-                                s.categorieid,
-                                s.frequency
-                        );
-                        do {
-                            cost += s.price;
-                            scopy.updateDayOfNextPayment(yearInFutur);
-                        } while (yearInFutur > s.dayofnextPayment);
+                        cost += s.price*12;
                     } else {
                         cost += s.price;
 
                     }
-            }
-        }
-        return cost;
-    }
-    public int getCostMonth(){
-        int cost = 0;
-        if(subscriptions!=null) {
-            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-            calendar.add(Calendar.MONTH, 1);
-            long monthInFutur = calendar.getTimeInMillis();
-            for (Subscription s : subscriptions
-
-            ) {
-                if (s.dayofnextPayment < monthInFutur) {
-                    cost += s.price;
-                }
             }
         }
         return cost;
@@ -213,45 +198,7 @@ public class MainViewModel extends AndroidViewModel{
         @Override
         public void onChanged(List<Subscription> data) {
             subscriptions = data;
-            cost = 0;
-            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-            if(!isYearlyMode) {
-                calendar.add(Calendar.MONTH, 1);
-                long monthInFutur = calendar.getTimeInMillis();
-                for (Subscription s : subscriptions
-
-                ) {
-                    if (s.dayofnextPayment < monthInFutur) {
-                        cost += s.price;
-                    }
-                }
-            }else {
-                calendar.add(Calendar.YEAR, 1);
-                long yearInFutur = calendar.getTimeInMillis();
-                for (Subscription s : Objects.requireNonNull(subscriptions)
-
-                ) {
-                    if (s.dayofnextPayment < yearInFutur)
-                        if (s.frequency == 2) {
-                            cost += s.price;
-                        } else if (s.frequency == 1) {
-                            Subscription scopy = new Subscription(
-                                    s.title,
-                                    s.dayofnextPayment,
-                                    s.price,
-                                    s.categorieid,
-                                    s.frequency
-                            );
-                            do {
-                                cost += scopy.price;
-                                scopy.updateDayOfNextPayment(yearInFutur);
-                            } while (yearInFutur > scopy.dayofnextPayment);
-                        } else {
-                            cost += s.price;
-
-                        }
-                }
-            }
+            calulateCostMonthYear();
 
         }
     }
