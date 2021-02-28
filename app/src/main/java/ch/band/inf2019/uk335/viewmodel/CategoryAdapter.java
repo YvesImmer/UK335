@@ -130,25 +130,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private int mothlyCost(int cathegorieid){
         int cost = 0;
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        List<Subscription> subscriptionscopy = new ArrayList<Subscription>();
-        for (Subscription s:subscriptions
-             ) {
-            if(s.categorieid == cathegorieid){
-                subscriptionscopy.add(new Subscription(
-                        s.title,
-                        s.dayofnextPayment,
-                        s.price,
-                        s.categorieid,
-                        s.frequency
-                ));
-            }
-
-        }
         calendar.add(Calendar.MONTH,1);
         long monthInFuture = calendar.getTimeInMillis();
-        for (Subscription s:subscriptionscopy
+        for (Subscription s:subscriptions
         ) {
-            if(s.dayofnextPayment<monthInFuture){
+            if(s.categorieid == cathegorieid && s.dayofnextPayment<monthInFuture){
                 cost+= s.price;
             }
         }
