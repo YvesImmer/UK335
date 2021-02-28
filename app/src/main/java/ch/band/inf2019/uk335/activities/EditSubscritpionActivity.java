@@ -107,6 +107,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         frequencySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         frequencySpinner.setAdapter(frequencySpinnerAdapter);
         frequencySpinner.setOnItemSelectedListener(this);
+        frequencySpinner.setSelection(subscription.frequency);
     }
 
     private void initPriceInput() {
@@ -195,6 +196,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categorySpinnerAdapter);
         categorySpinner.setOnItemSelectedListener(this);
+        categorySpinner.setSelection(categorySpinnerAdapter.getPosition(viewModel.getCategorieById(subscription.categorieid)));
     }
 
     private void initDateSelection() {
