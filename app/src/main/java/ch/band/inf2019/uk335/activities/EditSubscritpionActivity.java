@@ -190,7 +190,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog confirmBox = AskOption();
+                AlertDialog confirmBox = confirmDelete();
                 confirmBox.show();
             }
         });
@@ -201,12 +201,43 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isNew){
-                    viewModel.insert(subscription);
-                }else {viewModel.update(subscription);}
-                gotoSubscriptions();
+                if (checkPastDate()){
+                    confirmPastDate();
+                }else save();
             }
         });
+    }
+    private boolean checkPastDate(){
+        Calendar c = Calendar.getInstance();
+        return c.getTime().getTime()>subscription.dayofnextPayment;
+    }
+    private void confirmPastDate(){
+        AlertDialog confirmOldDateBox = new AlertDialog.Builder(this)
+                // set message, title
+                .setTitle("Altes Datum")
+                .setMessage("Das Datum liegt in der Vergangenheit wirklich speichern?")
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        save();
+                        dialog.dismiss();
+                    }
+
+                })
+                .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        confirmOldDateBox.show();
+
+    }
+    private void save(){
+        if(isNew){
+            viewModel.insert(subscription);
+        }else {viewModel.update(subscription);}
+        gotoSubscriptions();
     }
 
     private void initCategorySpinner() {
@@ -252,9 +283,9 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     }
 
 
-    private AlertDialog AskOption() {
-        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-                // set message, title, and icon
+    private AlertDialog confirmDelete() {
+        AlertDialog confirmDeleteBox = new AlertDialog.Builder(this)
+                // set message, title
                 .setTitle("Löschen")
                 .setMessage("Wirklich löschen?")
                 .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
@@ -274,7 +305,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
                 })
                 .create();
 
-        return myQuittingDialogBox;
+        return confirmDeleteBox;
     }
 
     @Override
