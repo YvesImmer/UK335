@@ -131,7 +131,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     private void initPriceInput() {
         priceTextInput = findViewById(R.id.text_input_price);
         priceTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-        priceTextInput.setText(NumberFormat.getCurrencyInstance().format(subscription.price / 100));
+        priceTextInput.setText(NumberFormat.getCurrencyInstance(new Locale("DE", "CH")).format(subscription.price / 100));
         priceTextInput.addTextChangedListener(
                 new TextWatcher() {
                     private String current ="";
@@ -144,9 +144,10 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
                         if(!s.toString().equals(current)){
                             priceTextInput.removeTextChangedListener(this);
                             //removes any existing symbols
-                            String cleanString = s.toString().trim().replaceAll("[$,.CHF ]","");
+                            //"Space" is not an actual space but the whitespace character used by the CHF currency
+                            String cleanString = s.toString().replaceAll("[$,.CHF ]","");
                             double parsed = Double.parseDouble(cleanString);
-                            String formatted = NumberFormat.getCurrencyInstance(new Locale("DE","CH")).format(((parsed/100)));
+                            String formatted = NumberFormat.getCurrencyInstance(new Locale("DE","CH")).format(parsed/100);
                             current = formatted;
                             priceTextInput.setText(current);
                             priceTextInput.setSelection(formatted.length());
@@ -235,6 +236,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     private void gotoSubscriptions() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

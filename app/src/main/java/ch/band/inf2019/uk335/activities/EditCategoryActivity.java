@@ -160,6 +160,7 @@ public class EditCategoryActivity extends AppCompatActivity {
     private void gotoCategories(){
         Intent intent = new Intent(this, CategoryOverviewActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private AlertDialog AskOption()

@@ -108,6 +108,7 @@ public class MainActivity extends OverviewActivity {
     private void gotoCategories(){
         Intent intent = new Intent(this, CategoryOverviewActivity.class);
         startActivity(intent);
+        finish();
     }
 
     /**
@@ -116,6 +117,7 @@ public class MainActivity extends OverviewActivity {
     private void gotoNewSubscritpion(){
         Intent intent = new Intent(this, EditSubscritpionActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

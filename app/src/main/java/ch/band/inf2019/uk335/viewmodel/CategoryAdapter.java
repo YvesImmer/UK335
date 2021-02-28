@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -80,7 +79,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 openEditActivity(v,current_item.id);
             }
         });
-        holder.text_view_price.setText(NumberFormat.getCurrencyInstance(new Locale("DE","CH")).format(mothlyCost(current_item.id)/100.0));
+        holder.text_view_price.setText(NumberFormat.getCurrencyInstance(new Locale("DE","CH")).format(mothlyCost(current_item.id)/100));
         holder.text_view_name.setText(current_item.title);
         holder.parent_layout.setBackgroundColor(current_item.color);
 
