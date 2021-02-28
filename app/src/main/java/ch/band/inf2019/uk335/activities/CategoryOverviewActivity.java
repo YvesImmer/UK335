@@ -76,6 +76,7 @@ public class CategoryOverviewActivity extends OverviewActivity {
     private void gotoSubscriptions(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
     private void gotoNewCategory(){
         Intent intent = new Intent (this, EditCategoryActivity.class);

@@ -1,11 +1,13 @@
 package ch.band.inf2019.uk335.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +30,7 @@ public class MainActivity extends OverviewActivity {
 
     //vars
     private ArrayList<Subscription>  subscriptions;
+    private List<Categorie> mCategories;
     private RecyclerView recyclerView;
     private SubscriptionAdapter adapter;
     private Button btn_goto_categories;
@@ -58,6 +61,7 @@ public class MainActivity extends OverviewActivity {
             @Override
             public void onChanged(List<Categorie> categories) {
                 adapter.setCategories((ArrayList<Categorie>) categories);
+                mCategories = categories;
                 adapter.notifyDataSetChanged();
             }
         });
@@ -115,9 +119,30 @@ public class MainActivity extends OverviewActivity {
      * Opens a new EditSubscriptionActivity with a new Subscription
      */
     private void gotoNewSubscritpion(){
-        Intent intent = new Intent(this, EditSubscritpionActivity.class);
-        startActivity(intent);
-        finish();
-    }
+        if (mCategories.size()>0) {
+            Intent intent = new Intent(this, EditSubscritpionActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+             new AlertDialog.Builder(this)
+                    // set message, title
+                    .setTitle("Keine Kategorie gefunden")
+                    .setMessage("Noch Keine Kategorien Erstellt, zu Kategorieübersicht?")
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
-}
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            gotoCategories();
+                            dialog.dismiss();
+                        }
+
+                    })
+                    .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+
+            }
+        }
+    }
