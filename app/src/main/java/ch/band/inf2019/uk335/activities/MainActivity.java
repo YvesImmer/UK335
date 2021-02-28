@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "Sum Field: clicked");
                 mainViewModel.changeMode();
+                setYearMontCost();
             }
         });
         setYearMonthCost();
