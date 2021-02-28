@@ -190,7 +190,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog confirmBox = confirmDelete();
+                AlertDialog confirmBox = getConfirmDelete();
                 confirmBox.show();
             }
         });
@@ -207,10 +207,19 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
             }
         });
     }
+
+    /**
+     * checks if the selected date is in the past
+     * @return
+     */
     private boolean checkPastDate(){
         Calendar c = Calendar.getInstance();
         return c.getTime().getTime()>subscription.dayofnextPayment;
     }
+
+    /**
+     * Asks the user to confirm if saving with a date that lies in the past
+     */
     private void confirmPastDate(){
         AlertDialog confirmOldDateBox = new AlertDialog.Builder(this)
                 // set message, title
@@ -233,12 +242,17 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         confirmOldDateBox.show();
 
     }
+
+    /**
+     * saves the created or edited subscription
+     */
     private void save(){
         if(isNew){
             viewModel.insert(subscription);
         }else {viewModel.update(subscription);}
         gotoSubscriptions();
     }
+
 
     private void initCategorySpinner() {
         categorySpinner = findViewById(R.id.spinner_category_select);
@@ -270,6 +284,13 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         finish();
     }
 
+    /**
+     * is called when a date is picked
+     * @param view
+     * @param year
+     * @param month
+     * @param dayOfMonth
+     */
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -282,8 +303,10 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         tv_selectedDate.setText(currentDateString);
     }
 
-
-    private AlertDialog confirmDelete() {
+    /**
+     * @return  AlertDialog asking the user to confirm deleteing
+     */
+    private AlertDialog getConfirmDelete() {
         AlertDialog confirmDeleteBox = new AlertDialog.Builder(this)
                 // set message, title
                 .setTitle("Löschen")
