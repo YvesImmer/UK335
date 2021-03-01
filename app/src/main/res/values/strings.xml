@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">My Subscriptions</string>
     <string name="subscriptions">Abos</string>
     <string name="button_new_subscription">Neu</string>
     <string name="text_view_subscriptions">Abos</string>
